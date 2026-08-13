@@ -24,9 +24,10 @@ xgboost = joblib.load("best_telco_model.joblib")["model"]
 
 class PublicPredView(APIView):
     def post(self, request):
-        serializer = FeatureSerializer(data=request.data)
+        is_many = isinstance(request.data, list)
+        serializer = FeatureSerializer(data=request.data, many=is_many)
         if serializer.is_valid():
-            df = pd.DataFrame([serializer.validated_data])
+            df = pd.DataFrame(serializer.validated_data if is_many else list(serializer.validated_data))
             prediction = xgboost.predict(df)
             return Response({"prediction": prediction.tolist()}, status=200)
     
