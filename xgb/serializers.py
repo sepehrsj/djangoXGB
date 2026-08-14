@@ -1,4 +1,5 @@
-from  rest_framework import serializers 
+from  rest_framework import serializers
+from .models import PredictionLog
 
 
 class FeatureSerializer(serializers.Serializer):
@@ -42,10 +43,10 @@ class FeatureSerializer(serializers.Serializer):
         return super().to_internal_value(new_data)
 
         
-    
-        
-
-
+class PredictionLogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PredictionLog
+        fields = ["input_data", "output_model", "created_time"]
 
 
 

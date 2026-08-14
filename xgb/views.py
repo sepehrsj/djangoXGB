@@ -5,8 +5,9 @@ from rest_framework.views import APIView
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import FeatureSerializer
+from .serializers import FeatureSerializer, PredictionLogSerializer
 from utilities.transformer import CustomTransformer
+
 
 
 
@@ -22,17 +23,27 @@ expected_columns = [
 xgboost = joblib.load("best_telco_model.joblib")["model"]
 
 
+
 class PublicPredView(APIView):
     def post(self, request):
         is_many = isinstance(request.data, list)
         serializer = FeatureSerializer(data=request.data, many=is_many)
         if serializer.is_valid():
-            df = pd.DataFrame(serializer.validated_data if is_many else list(serializer.validated_data))
+            df = pd.DataFrame(serializer.validated_data if is_many else [serializer.validated_data])
             prediction = xgboost.predict(df)
-            return Response({"prediction": prediction.tolist()}, status=200)
-    
-        return Response({"message": "data is not valid"}, status=400)
-
+            prediction_list = prediction.tolist()
+            
+            log_data = {
+                "input_data": request.data,
+                "output_model": prediction_list  
+            }
+            log_serializer = PredictionLogSerializer(data=log_data)
+            if log_serializer.is_valid():
+                log_serializer.save()
+            
+            return Response({"prediction": prediction_list}, status=200)
+            
+        return Response({"message": "data is not valid", "errors": serializer.errors}, status=400)
 
     def get(self, request):
         return Response({
@@ -54,10 +65,11 @@ class PublicPredView(APIView):
                 "Tech_Support": "",
                 "Streaming_TV": "",
                 "Streaming_Movies": "",
-                "Contract": "category",
+                "Contract": "",
                 "Paperless_Billing": "",
                 "Payment_Method": "",
                 "Monthly_Charges": "",
                 "Total_Charges": "",
             }
         })
+    
