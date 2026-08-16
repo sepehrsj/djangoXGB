@@ -7,9 +7,10 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import FeatureSerializer, PredictionLogSerializer
 from utilities.transformer import CustomTransformer
+import logging
 
 
-
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 expected_columns = [
