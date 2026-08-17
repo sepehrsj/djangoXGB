@@ -1,5 +1,4 @@
 from sklearn.model_selection import GridSearchCV, train_test_split
-from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
 import pandas as pd
 import xgboost as xgb
