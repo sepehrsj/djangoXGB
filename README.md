@@ -29,10 +29,10 @@ A production-grade **RESTful API service** built with Django REST Framework (DRF
 djangoXGB/
 │
 ├── xgb/                      # Core Django app for predictions & auditing
-│   ├── migrations/           # Database migration history
+│   ├── migrations/           
 │   ├── __init__.py
 │   ├── admin.py              # Django admin configuration
-│   ├── apps.py               # App configuration
+│   ├── apps.py              
 │   ├── models.py             # Inference audit log models
 │   ├── serializers.py        # Input & audit log DRF serializers
 │   ├── tests.py              # Comprehensive pytest suite
@@ -41,7 +41,7 @@ djangoXGB/
 │
 ├── xgbTree/                  # Main project settings & configuration
 │   ├── __init__.py
-│   ├── settings.py           # Includes custom LOGGING configuration
+│   ├── settings.py           
 │   ├── urls.py
 │   └── wsgi.py
 │
