@@ -52,3 +52,47 @@ djangoXGB/
 ├── .gitignore
 ├── manage.py
 └── requirements.txt
+```
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/sepehrsj/djangoXGB.git
+cd djangoXGB
+```
+### 2. Create and activate a virtual environment
+```bash
+python -m venv venv
+```
+# On Windows:
+```bash
+venv\Scripts\activate
+```
+# On Mac/Linux:
+```bash
+source venv/bin/activate
+```
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+### 4. Run Migrations
+```bash
+python manage.py migrate
+```
+### 5. Generate the Model
+To avoid module import errors and properly build the trained model file locally, run the script as a module from the root directory:
+
+```bash
+python -m utilities.lab
+```
+### 6. Test the Application
+```bash
+python -m pytest -v
+```
+### 7. Run the Development Server
+```bash
+python manage.py runserver
+```
+
