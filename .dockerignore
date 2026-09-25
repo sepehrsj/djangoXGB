@@ -4,7 +4,11 @@ __pycache__/
 # Virtual Environments
 venv/
 env/
+
+# git
 .git
+.gitignore
+
 # Django local files
 *.sqlite3
 
